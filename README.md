@@ -47,6 +47,10 @@ The REST API provides endpoints to retrieve user-specific and global statistics.
      ```
      GET http://localhost:8000/user/U18/stats
      ```  
+
+    ![image](https://github.com/user-attachments/assets/cdfd3603-85ce-4e41-a358-971bbd0b9fe2)
+
+
    - **Example Response:**  
      ```json
      {
@@ -70,6 +74,7 @@ The REST API provides endpoints to retrieve user-specific and global statistics.
        "total_revenue": 788.87
      }
      ```
+      ![image](https://github.com/user-attachments/assets/d85c767e-f9ef-46fa-9956-29d8f474e4b9)
 
 
 ---
@@ -113,21 +118,6 @@ The REST API provides endpoints to retrieve user-specific and global statistics.
 +-----------------------------------+
 ```
 
----
-
-## Scaling the System
-
-### 1. **Increased Event Volume:**
-- **SQS:** Automatically scales to handle higher event rates.
-- **Workers:** Add more worker instances to process events in parallel.
-- **Redis Scaling:** Use clustering or sharding to distribute data across multiple nodes.
-
-### 2. **More Complex Queries:**
-- Use Redis to serve aggregated data as a low-latency cache.
-- Store raw event data in a data lake (e.g., S3) for long-term storage and advanced analytics.
-
-### 3. **API Scalability:**
-- Deploy FastAPI in a containerized setup with horizontal scaling behind a load balancer.
 
 ---
 
@@ -138,15 +128,19 @@ The REST API provides endpoints to retrieve user-specific and global statistics.
 
 2. **Worker processes the event:**
    - Updates Redis:
-     - `user:123:cumulative_spend = 100`
-     - `user:123:total_orders = 1`
+     - `user:U11:cumulative_spend = 100`
+     - `user:U11:total_orders = 1`
      - `global:cumulative_spend = 100`
      - `global:total_orders = 1`
 
 3. **User retrieves stats via API:**
    - API fetches data from Redis:
-     - For `user:123` → `{ "cumulative_spend": 100, "total_orders": 1 }`
-     - For global stats → `{ "cumulative_spend": 100, "total_orders": 1 }`
+     - For `user:U11` → `{
+  "user_id": "U11",
+  "order_count": 1,
+  "total_spend": 100.0
+}`
+     - For global stats → `{ "total_revenue": 100, "total_orders": 1 }`
 
 ---
 
@@ -168,8 +162,17 @@ The REST API provides endpoints to retrieve user-specific and global statistics.
    ```
 4. Populate the SQS queue with sample data
 Use the provided Python script in the scripts folder to send messages to the
-Localstack SQS queue:
-python init/populate_sqs.py
-5. Access the FastAPI API at `http://localhost:8000`.
+   ```bash
+   python init/populate_sqs.py
+   ```
+5. Access the FastAPI API at.
+   ```bash
+   http://localhost:8000
+   ```
+![image](https://github.com/user-attachments/assets/250d0d47-f10f-4993-8325-c27595b3301e)
+
+
+![image](https://github.com/user-attachments/assets/ef6739e3-a6f2-4c7b-b83f-f5e95f36cdfd)
 
 ---
+
