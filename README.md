@@ -65,7 +65,7 @@ The REST API provides endpoints to retrieve user-specific and global statistics.
    - **Description:** Returns overall platform statistics.  
    - **Example Request:**  
      ```
-     GET http://localhost:8000/stats/global
+     GET http://localhost:8000/global/stats
      ```  
    - **Example Response:**  
      ```json
