@@ -150,6 +150,25 @@ The REST API provides endpoints to retrieve user-specific and global statistics.
 - **Efficient Retrieval:** Redis caching ensures low-latency data access for API requests.
 
 ---
+## Prerequisites
+
+Ensure you have the following installed before proceeding:
+
+### 1. Docker Compose
+Install Docker Compose using the following command:
+
+```sh
+sudo apt install docker-compose
+```
+
+### 3. boto3
+Install boto3 using the following command:
+
+```sh
+pip3 install boto3
+```
+---
+
 
 ## Getting Started
 1. Clone the repository.
